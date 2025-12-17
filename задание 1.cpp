@@ -1,9 +1,10 @@
-﻿#include <iostream>
+#include <iostream>
+#include <cstdint>
 int** make(int, int);
-void enter_elements(int, int**);
-void find_max(int, int**);
-int sum_triangle(int, int**);
-void clear_array(int, int**);
+void enter_elements(int, int**&);
+void find_max(int, int**&);
+int sum_triangle(int, int**&);
+void clear_array(int, int**&);
 int main()
 {
 	int n = 0;
@@ -12,7 +13,6 @@ int main()
 	if (n > 0) {
 		int row = n;
 		int col = n;
-		make(row, col);
 		int** matrix = make(row, col);
 		enter_elements(n, matrix);
 		find_max(n, matrix);
@@ -33,15 +33,15 @@ int** make(int row, int col)
 	}
 	return matrix;
 }
-void enter_elements(int n, int** matrix) {
+void enter_elements(int n, int**& matrix) {
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			std::cin >> matrix[i][j];
 		}
 	}
 }
-void find_max(int n, int** matrix) {
-	int max = -32678;
+void find_max(int n, int**& matrix) {
+	int max = INT32_MIN;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			if (matrix[j][i] > max) {
@@ -49,13 +49,13 @@ void find_max(int n, int** matrix) {
 			}
 		}
 		if (max < 0) {
-			std::cout << "max element in neg col" << i + 1 << " " <<  max << " ";
+			std::cout << "max element in neg col" << i + 1 << " " << max << " ";
 		}
 		else std::cout << "in col" << " " << i + 1 << " " << "positive element" << " ";
-		max = -32768;
+		max = INT32_MIN;
 	}
 }
-int sum_triangle(int n, int** matrix) {
+int sum_triangle(int n, int**& matrix) {
 	int sum = 0;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0 + i; j < n; j++) {
@@ -67,9 +67,10 @@ int sum_triangle(int n, int** matrix) {
 	}
 	return sum;
 }
-void clear_array(int n, int** matrix) {
+void clear_array(int n, int**& matrix) {
 	for (int i = 0; i < n; i++) {
 		delete[] matrix[i];
 	}
 	delete[] matrix;
+
 }
